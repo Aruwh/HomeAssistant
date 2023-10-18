@@ -1,0 +1,45 @@
+blueprint:
+  name: Disable activated Light 
+  description: Turn off a light after a periode of time
+  domain: automation
+  input:
+    activated_entity:
+      name: Switch
+      selector:
+        entity:
+          filter:
+            device_class: sensor
+            domain: binary_sensor
+    light_target:
+      name: Light
+      selector:
+        target:
+          entity:
+            domain: light
+    no_motion_wait:
+      name: Wait time
+      description: Time till the turns off after is switched on.
+      default: 120
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: seconds
+
+trigger:
+  - platform: state
+    entity_id: !input activated_entity
+    from: "off"
+    to: "on"
+
+action:
+  - service: light.turn_on
+    target: !input light_target
+  - wait_for_trigger:
+      platform: state
+      entity_id: !input activated_entity
+      from: "on"
+      to: "off"
+  - delay: !input no_motion_wait
+  - service: light.turn_off
+    target: !input light_target
