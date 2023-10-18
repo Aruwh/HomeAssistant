@@ -10,10 +10,9 @@ blueprint:
           domain: binary_sensor
     switch_target:
       name: Switch
-      selector:
-        target:
-          entity:
-            domain: switch
+      selector: 
+        entity:
+          domain: binary_sensor
     no_motion_wait:
       name: Wait time
       description: Time till the turns off after is switched on.
