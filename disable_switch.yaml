@@ -36,10 +36,12 @@ action:
   - wait_for_trigger:
       platform: state
       entity_id: !input activated_entity
-      from: "on"
-      to: "off"
+      from: "off"
+      to: "on"
   - delay: 
       seconds: !input no_motion_wait
   - service: switch.turn_off
     target:
       entity_id: !input switch_target
+      from: "on"
+      to: "off"  
