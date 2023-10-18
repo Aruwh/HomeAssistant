@@ -43,5 +43,3 @@ action:
   - service: switch.turn_off
     target:
       entity_id: !input switch_target
-      from: "on"
-      to: "off"  
